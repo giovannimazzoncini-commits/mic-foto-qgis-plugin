@@ -28,7 +28,7 @@ jobs:
           cfg.read(root / 'metadata.txt', encoding='utf-8')
           meta = cfg['general']
           version = meta['version']
-          package = f'MIC_FOTO-{version}.zip'
+          package = 'mic_foto.zip'
           with zipfile.ZipFile(package, 'w', zipfile.ZIP_DEFLATED) as archive:
               for path in sorted(root.rglob('*')):
                   if path.is_file() and '__pycache__' not in path.parts and path.suffix != '.pyc':
@@ -37,6 +37,7 @@ jobs:
           with zipfile.ZipFile(package) as archive:
               assert archive.testzip() is None
               assert 'mic_foto/__init__.py' in archive.namelist()
+              assert {name.split('/')[0] for name in archive.namelist()} == {pathlib.Path(package).stem}
           plugins = ET.Element('plugins')
           plugin = ET.SubElement(plugins, 'pyqgis_plugin', name='MIC_FOTO', version=version)
           values = {'description': meta['description'], 'about': meta['about'],
@@ -44,7 +45,7 @@ jobs:
                     'author_name': meta['author'], 'experimental': 'True',
                     'homepage': meta['homepage'], 'tracker': meta['tracker'],
                     'repository': meta['repository'], 'file_name': package,
-                    'download_url': 'https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/' + package}
+                    'download_url': 'https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/' + package + '?v=' + version}
           for key, value in values.items():
               ET.SubElement(plugin, key).text = value
           ET.indent(plugins)
@@ -54,7 +55,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- MIC_FOTO-*.zip plugins.xml
+          git add -- mic_foto.zip plugins.xml
           if ! git diff --cached --quiet; then
             git commit -m 'Build MIC_FOTO package and QGIS repository index'
             git push origin HEAD:main
