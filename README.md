@@ -1,22 +1,20 @@
-# MIC_FOTO 0.2.5
+# MIC_FOTO 0.3.0
 
-Plugin sperimentale per QGIS 3.34-3.x (Qt5).
+Restyling del solo pannello, mantenendo le funzioni della 0.2.5. Nessun percorso di sopralluogo, rete OSM, routing o nuova dipendenza.
 
-## Consultazione diretta dei layer
-Caricare il GeoPackage in QGIS, selezionare il layer fotografico e premere Usa layer foto selezionato. Il layer deve contenere punti singoli e il campo filepath. Non viene creato alcun nuovo layer temporaneo. Clic sui punti tramite Consulta sulla mappa, selezione QGIS, elenco e galleria sono sincronizzati sullo stesso layer usando i suoi FID. Non e richiesto il campo photo_id.
-La modalita viene indicata nel pannello. Modifica posizione, assegnazione e annullamento sono bloccati: non vengono riscritti gli elementi del layer collegato. La simbologia originale viene conservata. Eventuali modifiche esterne al layer richiedono un nuovo collegamento per aggiornare l'elenco. Dopo il riavvio di QGIS ricollegare il layer; per la sola consultazione non serve aprire una sessione JSON.
-Il GeoPackage contiene i percorsi delle fotografie, non incorpora i JPG. File mancanti segnalati nell'elenco. Percorsi relativi interpretati rispetto alla cartella della sorgente del layer o del progetto. Non vengono corretti automaticamente percorsi spostati.
+## Interfaccia
+Intestazione con icona e accento petrolio. Modalita e layer collegato in evidenza. Comandi di apertura e salvataggio compatti. Scheda Foto con elenco e anteprima ridimensionabili, navigazione, dettagli, Segui foto e Consulta sulla mappa. Scheda Posizionamento separata: comandi disabilitati durante la consultazione diretta di un GeoPackage. Menu Esporta nell'intestazione con Esporta GeoPackage e Scrivi GPS nelle copie. Stile applicato soltanto al corpo del plugin, non al tema generale QGIS.
 
-## Altre modalita
-Apri foto e Apri lavoro chiedono di scollegare il layer prima di aprire un altro lavoro. Le funzioni di importazione e posizionamento continuano a usare il lavoro MIC_FOTO. Salvare le sessioni JSON e i GeoPackage prima di chiudere. La galleria ingrandita mantiene Precedente/Successiva e frecce. Conservati icona, punti e controlli delle versioni precedenti.
+## Uso
+Apri foto importa JPG/JPEG; Salva lavoro conserva la sessione JSON. Apri lavoro riprende una sessione precedente. Usa layer selezionato consulta direttamente un layer di punti con filepath, senza duplicarlo e senza modificarne i dati. Ingrandisci foto mantiene navigazione con pulsanti e frecce. Il GeoPackage contiene collegamenti alle immagini: i JPG devono restare accessibili.
 
 ## Aggiornamento
-Salvare lavoro e progetto. Abilitare plugin sperimentali e ricaricare il repository:
+Salvare lavoro e progetto. Ricaricare il repository nel gestore plugin, con sperimentali abilitati:
 https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/plugins.xml
-Controllare versione disponibile 0.2.5, aggiornare e riavviare QGIS. Il workflow genera mic_foto.zip e plugins.xml.
+Verificare versione disponibile 0.3.0, aggiornare e riavviare QGIS. Il workflow genera mic_foto.zip e plugins.xml.
 
-## Test e limiti
-Sintassi verificata e test simulati su collegamento allo stesso layer, FID non consecutivi senza photo_id, blocco della ricostruzione, selezione diretta e percorsi mancanti. Non eseguito collaudo Qt/QGIS in questo ambiente. Provare prima su copie dei dati. Solo JPG/JPEG, niente GPX/HEIC; scansione sincrona. Non modificare direttamente gli attributi del lavoro temporaneo.
+## Verifiche e limiti
+Sintassi e controlli statici verificati; callback del menu simulate con checked True/False. Nessun test Qt/QGIS eseguito in questo ambiente: collaudare ridimensionamento, contrasto, esportazione dal menu, consultazione GeoPackage e posizionamento. Restano i limiti della 0.2.5: JPG/JPEG, niente GPX/HEIC, percorsi delle immagini da mantenere accessibili, sessione e GeoPackage separati. Il restyling riutilizza i controlli e i segnali esistenti, senza riscrivere geometrie o attributi.
 
 ## Licenza
-GPL-3.0-or-later, codice e icona originali. Il pacchetto include il testo GPL-3.
+GPL-3.0-or-later, codice e icona originali. Testo GPL-3 incluso nel pacchetto.
