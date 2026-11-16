@@ -1,0 +1,61 @@
+name: Publish QGIS plugin
+on:
+  push:
+    branches: [main]
+    paths: ['mic_foto/**', '.github/workflows/publish.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-mic-foto
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate and package
+        run: |
+          python - <<'PY'
+          import ast, configparser, pathlib, zipfile, xml.etree.ElementTree as ET
+          root = pathlib.Path('mic_foto')
+          for path in root.rglob('*.py'):
+              ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+          cfg = configparser.ConfigParser(interpolation=None)
+          cfg.read(root / 'metadata.txt', encoding='utf-8')
+          meta = cfg['general']
+          version = meta['version']
+          package = f'MIC_FOTO-{version}.zip'
+          with zipfile.ZipFile(package, 'w', zipfile.ZIP_DEFLATED) as archive:
+              for path in sorted(root.rglob('*')):
+                  if path.is_file() and '__pycache__' not in path.parts and path.suffix != '.pyc':
+                      archive.write(path, path.as_posix())
+              archive.write('/usr/share/common-licenses/GPL-3', 'mic_foto/LICENSE')
+          with zipfile.ZipFile(package) as archive:
+              assert archive.testzip() is None
+              assert 'mic_foto/__init__.py' in archive.namelist()
+          plugins = ET.Element('plugins')
+          plugin = ET.SubElement(plugins, 'pyqgis_plugin', name='MIC_FOTO', version=version)
+          values = {'description': meta['description'], 'about': meta['about'],
+                    'qgis_minimum_version': '3.34', 'qgis_maximum_version': '3.99',
+                    'author_name': meta['author'], 'experimental': 'True',
+                    'homepage': meta['homepage'], 'tracker': meta['tracker'],
+                    'repository': meta['repository'], 'file_name': package,
+                    'download_url': 'https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/' + package}
+          for key, value in values.items():
+              ET.SubElement(plugin, key).text = value
+          ET.indent(plugins)
+          ET.ElementTree(plugins).write('plugins.xml', encoding='utf-8', xml_declaration=True)
+          PY
+      - name: Commit package and plugin index
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- MIC_FOTO-*.zip plugins.xml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build MIC_FOTO package and QGIS repository index'
+            git push origin HEAD:main
+          fi

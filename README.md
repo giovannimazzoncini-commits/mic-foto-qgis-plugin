@@ -1,22 +1,27 @@
-# MIC_FOTO
+# MIC_FOTO 0.2.0
 
-Plugin sperimentale per QGIS 3.34 (Qt5), versione base 0.1.0.
+Plugin sperimentale per QGIS 3.34, Qt5. Non collaudato automaticamente dentro QGIS: verificare su copie delle foto. La base 0.1.0 e' stata provata dall'utente; la nuova interfaccia richiede collaudo.
 
-## Funzioni
-Importazione ricorsiva JPG/JPEG, lettura EXIF, anteprima, posizionamento sulla mappa, annullamento, sessioni JSON, esportazione GeoPackage e scrittura GPS nelle copie con verifica. Gli originali non vengono modificati.
+## Installazione e aggiornamenti
+Dopo il successo del workflow Publish QGIS plugin, aggiungere in QGIS, Plugin > Gestisci e installa plugin > Impostazioni > Aggiungi, il repository:
+https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/plugins.xml
+Abilitare Mostra anche plugin sperimentali. Cercare MIC_FOTO in Tutti o Aggiornabili, installare/aggiornare e riavviare QGIS dopo aver salvato il lavoro. Se il workflow fallisce, l'indice e il pacchetto potrebbero non essere aggiornati: controllare Actions su GitHub.
 
-## Uso
-Aprire MIC_FOTO dal menu Plugin. Apri cartella importa le fotografie. Premere subito Salva lavoro per scegliere il file .micfoto.json: da quel momento le modifiche vengono salvate automaticamente. Selezionare una foto e Posiziona / correggi sulla mappa, quindi cliccare il punto di scatto. Terminare con clic destro o Termina posizionamento.
+## Consultazione
+Apri foto importa JPG/JPEG, anche nelle sottocartelle. Apri lavoro ricarica le sessioni JSON della 0.1.0 e 0.2.0. Salva lavoro attiva il salvataggio automatico delle posizioni successive.
+Selezionare una foto o usare Precedente/Successiva: il punto viene selezionato sulla mappa. Con Segui foto attivo la mappa si centra mantenendo la scala. I filtri limitano la navigazione all'elenco visibile.
+Consulta sulla mappa attiva lo strumento per cliccare i punti del layer di lavoro e aprire la foto. Selezioni QGIS sul layer di lavoro vengono sincronizzate. Collega layer attivo importa un layer con filepath (es. GPKG MIC_FOTO), crea un layer di lavoro separato e sincronizza anche la selezione del layer originale senza modificarlo. Le modifiche richiedono una nuova esportazione. Per riprendere il lavoro salvare anche la sessione JSON.
+Anteprima ridimensionabile con divisore elenco/foto. Ingrandisci foto o doppio clic apre una finestra adattabile. Le etichette distinguono EXIF e posizione manuale; EXIF non certifica che la posizione provenga dal telefono.
 
-Apri lavoro riapre la sessione JSON, non il GeoPackage. Esporta GPKG crea un nuovo file con tutti i record; le foto senza posizione hanno geometria nulla. Scrivi GPS nelle copie crea nuovi JPG nella cartella scelta e un rapporto JSON; i nomi esistenti vengono saltati. Conservare sessione, foto e GeoPackage senza spostare le immagini (percorsi assoluti).
+## Modifica e salvataggio
+Aprire Modifica posizione per abilitare i comandi. Posiziona / correggi assegna la posizione con clic sinistro; clic destro o Termina conclude. Annulla ultima posizione ripristina l'ultima modifica della sessione corrente.
+Esporta GeoPackage salva tutti i record, anche senza geometria, in un nuovo file. GPS nelle copie crea JPG senza sovrascrivere nomi esistenti, rilegge i GPS e salva un rapporto JSON. Gli originali non sono modificati.
 
-## Stato e limiti
-0.1.0 collaudata dall'autore nella propria installazione QGIS; non e' una certificazione su tutte le piattaforme. Solo JPG/JPEG, niente GPX/HEIC, scansione sincrona, annullamento non persistente. Non importa GeoPackage come sessione. Salvare prima di chiudere QGIS. Non modificare il layer di lavoro dalla tabella attributi: viene rigenerato dal pannello.
+## Limiti
+JPG/JPEG, niente GPX/HEIC. Percorsi assoluti: non spostare le immagini. Foto mancanti segnalate, ricollocamento cartelle non ancora implementato. Sessione JSON e GPKG sono separati. Scansione sincrona: cartelle grandi possono rallentare QGIS. Salvare prima di chiudere QGIS. Non modificare direttamente gli attributi del layer di lavoro: viene rigenerato dal pannello. Punti sovrapposti possono richiedere selezione tramite tabella o elenco.
 
-La 0.2.0 con interfaccia migliorata e sincronizzazione bidirezionale foto-punto e' pianificata, non inclusa. Nessun pacchetto di distribuzione o indice plugins.xml e' ancora pubblicato.
-
-## Sorgenti
-La cartella mic_foto contiene il plugin. Per l'installazione manuale copiarla nella cartella dei plugin del profilo QGIS, quindi riavviare QGIS e attivare MIC_FOTO.
+## Collaudo consigliato
+Provare importazione, selezione punto-foto e foto-punto, navigazione, filtri, anteprima, CRS diverso da WGS84, riapertura sessione 0.1.0, collegamento GPKG, modifica ed esportazione. Verificare su copie la scrittura EXIF. I controlli di sintassi e ZIP non sostituiscono i test dentro QGIS.
 
 ## Licenza
-SPDX-License-Identifier: GPL-3.0-or-later. Codice originale; non include sorgenti di ImportPhotos o GeotagManager. Testo della licenza: https://www.gnu.org/licenses/gpl-3.0.txt . Aggiungere il testo integrale LICENSE prima di distribuire una release.
+SPDX-License-Identifier: GPL-3.0-or-later. Codice originale; nessun sorgente di ImportPhotos o GeotagManager incluso. Il pacchetto prodotto dal workflow include il testo GPL-3 in mic_foto/LICENSE. Il motore 0.1.0 in plugin.py viene mantenuto come base; viewer.py aggiunge la nuova interfaccia.

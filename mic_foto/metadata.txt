@@ -2,11 +2,14 @@
 name=MIC_FOTO
 qgisMinimumVersion=3.34
 qgisMaximumVersion=3.99
-description=Importazione JPG, anteprima e posizionamento manuale delle foto di sopralluogo.
-about=Prototipo sperimentale. Sessioni JSON, esportazione GeoPackage e GPS nelle copie JPG. Non modifica gli originali.
-version=0.1.0
+description=Foto di sopralluogo: importazione, geolocalizzazione e consultazione sincronizzata.
+about=Anteprima ridimensionabile, selezione foto-punto bidirezionale, sessioni JSON, GeoPackage e GPS nelle copie JPG. Versione sperimentale.
+version=0.2.0
 author=Giovanni Mazzoncini
 email=
 experimental=True
 category=Vector
 hasProcessingProvider=no
+homepage=https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin
+tracker=https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/issues
+repository=https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin
