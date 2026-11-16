@@ -10,7 +10,7 @@
     <homepage>https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin</homepage>
     <tracker>https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/issues</tracker>
     <repository>https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin</repository>
-    <file_name>MIC_FOTO-0.2.0.zip</file_name>
-    <download_url>https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/MIC_FOTO-0.2.0.zip</download_url>
+    <file_name>mic_foto.zip</file_name>
+    <download_url>https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/mic_foto.zip?v=0.2.0</download_url>
   </pyqgis_plugin>
 </plugins>
