@@ -22,12 +22,15 @@ def guarded(method):
     @wraps(method)
     def call(self, *args, **kwargs):
         prune(self)
+        if method.__name__ in ('browse', 'link_layer', 'stop_tool', 'export'):
+            if len(args) == 1 and isinstance(args[0], bool):
+                args = ()
         return method(self, *args, **kwargs)
     return call
 
 
 for name in ('rebuild_layer', 'sync_selection', 'from_map', 'external_selected',
-             'disconnect_external', 'stop_tool', 'closeEvent', 'browse', 'link_layer'):
+             'disconnect_external', 'stop_tool', 'closeEvent', 'browse', 'link_layer', 'export'):
     setattr(Panel, name, guarded(getattr(Panel, name)))
 
 

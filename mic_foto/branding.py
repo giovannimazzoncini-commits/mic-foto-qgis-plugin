@@ -90,7 +90,7 @@ def export(panel, *args):
         if layer.providerType() == 'ogr' and 'photo_id' in layer.fields().names():
             apply_style(layer)
             try:
-                error = layer.saveStyleToDatabase('MIC_FOTO', 'MIC_FOTO 0.2.3', True, '')
+                error = layer.saveStyleToDatabase('MIC_FOTO', 'MIC_FOTO 0.2.4', True, '')
                 if error:
                     panel.status.setText('GeoPackage esportato, ma stile non salvato: ' + str(error))
             except Exception as exc:
@@ -107,7 +107,7 @@ _original_gallery_refresh = Gallery.refresh
 @wraps(_original_gallery_refresh)
 def gallery_refresh(dialog):
     _original_gallery_refresh(dialog)
-    dialog.setWindowTitle(dialog.windowTitle().replace('MIC_FOTO 0.2.2', 'MIC_FOTO 0.2.3', 1))
+    dialog.setWindowTitle(dialog.windowTitle().replace('MIC_FOTO 0.2.2', 'MIC_FOTO 0.2.4', 1))
 
 
 Gallery.refresh = gallery_refresh
@@ -128,7 +128,7 @@ class Plugin(GalleryPlugin):
     def run(self):
         super().run()
         panel = self.panel
-        panel.setWindowTitle('MIC_FOTO 0.2.3 — sperimentale')
+        panel.setWindowTitle('MIC_FOTO 0.2.4 — sperimentale')
         panel.setWindowIcon(self.action.icon())
         if not hasattr(panel, '_marker_crs_slot'):
             panel._marker_crs_slot = lambda *args: update_marker(panel)
