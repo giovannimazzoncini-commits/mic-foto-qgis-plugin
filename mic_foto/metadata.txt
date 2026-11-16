@@ -1,0 +1,12 @@
+[general]
+name=MIC_FOTO
+qgisMinimumVersion=3.34
+qgisMaximumVersion=3.99
+description=Importazione JPG, anteprima e posizionamento manuale delle foto di sopralluogo.
+about=Prototipo sperimentale. Sessioni JSON, esportazione GeoPackage e GPS nelle copie JPG. Non modifica gli originali.
+version=0.1.0
+author=Giovanni Mazzoncini
+email=
+experimental=True
+category=Vector
+hasProcessingProvider=no
