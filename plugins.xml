@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugins>
+  <pyqgis_plugin name="MIC_FOTO" version="0.2.0">
+    <description>Foto di sopralluogo: importazione, geolocalizzazione e consultazione sincronizzata.</description>
+    <about>Anteprima ridimensionabile, selezione foto-punto bidirezionale, sessioni JSON, GeoPackage e GPS nelle copie JPG. Versione sperimentale.</about>
+    <qgis_minimum_version>3.34</qgis_minimum_version>
+    <qgis_maximum_version>3.99</qgis_maximum_version>
+    <author_name>Giovanni Mazzoncini</author_name>
+    <experimental>True</experimental>
+    <homepage>https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin</homepage>
+    <tracker>https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/issues</tracker>
+    <repository>https://github.com/giovannimazzoncini-commits/mic-foto-qgis-plugin</repository>
+    <file_name>MIC_FOTO-0.2.0.zip</file_name>
+    <download_url>https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/MIC_FOTO-0.2.0.zip</download_url>
+  </pyqgis_plugin>
+</plugins>
