@@ -24,6 +24,7 @@ jobs:
           root = pathlib.Path('mic_foto')
           for path in root.rglob('*.py'):
               ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+          ET.parse(root / 'icon.svg')
           cfg = configparser.ConfigParser(interpolation=None)
           cfg.read(root / 'metadata.txt', encoding='utf-8')
           meta = cfg['general']
@@ -37,6 +38,7 @@ jobs:
           with zipfile.ZipFile(package) as archive:
               assert archive.testzip() is None
               assert 'mic_foto/__init__.py' in archive.namelist()
+              assert 'mic_foto/icon.svg' in archive.namelist()
               assert {name.split('/')[0] for name in archive.namelist()} == {pathlib.Path(package).stem}
           plugins = ET.Element('plugins')
           plugin = ET.SubElement(plugins, 'pyqgis_plugin', name='MIC_FOTO', version=version)
@@ -45,6 +47,7 @@ jobs:
                     'author_name': meta['author'], 'experimental': 'True',
                     'homepage': meta['homepage'], 'tracker': meta['tracker'],
                     'repository': meta['repository'], 'file_name': package,
+                    'icon': 'https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/mic_foto/icon.svg',
                     'download_url': 'https://raw.githubusercontent.com/giovannimazzoncini-commits/mic-foto-qgis-plugin/main/' + package + '?v=' + version}
           for key, value in values.items():
               ET.SubElement(plugin, key).text = value
